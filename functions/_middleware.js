@@ -1,3 +1,25 @@
+import graphQLPlugin from "@cloudflare/pages-plugin-graphql";
+import {
+  graphql,
+  GraphQLSchema,
+  GraphQLObjectType,
+  GraphQLString,
+} from "graphql";
+
+const schema = new GraphQLSchema({
+  query: new GraphQLObjectType({
+    name: "RootQueryType",
+    fields: {
+      hello: {
+        type: GraphQLString,
+        resolve() {
+          return "Hello, world!";
+        },
+      },
+    },
+  }),
+});
+
 export async function onRequest(context) {
     // Contents of context object
     const {
@@ -13,3 +35,8 @@ export async function onRequest(context) {
     url.hostname = "git.pig2333.workers.dev";// 多 重 代 理
     return fetch(new Request(url, request))
 }
+
+export const onRequestGet: PagesFunction = graphQLPlugin({
+  schema,
+  graphql,
+});
