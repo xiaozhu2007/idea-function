@@ -10,6 +10,6 @@ export async function onRequest(context) {
     } = context;
 
     let url = new URL(request.url);
-    url.hostname = "index.pig2333.workers.dev";// 多 重 代 理
+    url.hostname = "git.pig2333.workers.dev";// 多 重 代 理
     return fetch(new Request(url, request))
 }
