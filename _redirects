@@ -1,4 +1,7 @@
 # 重定向
+/github.com/ / 301
+/github https://github.com/ 302
+/gh/* /:splat 302
 /github.com/:username/:repo /:username/:repo 301
 /github.com/:username/:repo/blob/:branch /:username/:repo/blob/:branch 301
 /github.com/:username/:repo/tree/:branch/:path /:username/:repo/tree/:branch/:path 301
