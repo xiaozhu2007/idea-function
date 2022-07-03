@@ -1,0 +1,5 @@
+# 重定向
+/github.com/:username/:repo /:username/:repo 301
+/github.com/:username/:repo/blob/:branch /:username/:repo/blob/:branch 301
+/github.com/:username/:repo/tree/:branch/:path /:username/:repo/tree/:branch/:path 301
+/github.com/:username /:username 301
