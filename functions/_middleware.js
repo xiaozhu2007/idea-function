@@ -1,24 +1,16 @@
-import graphQLPlugin from "@cloudflare/pages-plugin-graphql";
-import {
-  graphql,
-  GraphQLSchema,
-  GraphQLObjectType,
-  GraphQLString,
-} from "graphql";
+const errorHandler = async ({ next }) => {
+  try {
+    return await next();
+  } catch (err) {
+    return new Response(`${err.message}\n${err.stack}`, { status: 500 });
+  }
+};
 
-const schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: "RootQueryType",
-    fields: {
-      hello: {
-        type: GraphQLString,
-        resolve() {
-          return "Hello, world!";
-        },
-      },
-    },
-  }),
-});
+const hello = async ({ next }) => {
+  const response = await next();
+  response.headers.set('X-Hello', 'Hello from functions Middleware!');
+  return response;
+};
 
 export async function onRequest(context) {
     // Contents of context object
@@ -36,7 +28,4 @@ export async function onRequest(context) {
     return fetch(new Request(url, request))
 }
 
-export const onRequestGet: PagesFunction = graphQLPlugin({
-  schema,
-  graphql,
-});
+export const onRequestGet = [errorHandler, hello];
