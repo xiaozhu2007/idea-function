@@ -1,17 +1,3 @@
-const errorHandler = async ({ next }) => {
-  try {
-    return await next();
-  } catch (err) {
-    return new Response(`${err.message}\n${err.stack}`, { status: 500 });
-  }
-};
-
-const hello = async ({ next }) => {
-  const response = await next();
-  response.headers.set('X-Hello', 'Hello from functions Middleware!');
-  return response;
-};
-
 export async function onRequest(context) {
     // Contents of context object
     const {
@@ -27,5 +13,3 @@ export async function onRequest(context) {
     url.hostname = "git.pig2333.workers.dev";// 多 重 代 理
     return fetch(new Request(url, request))
 }
-
-export const onRequestGet = [errorHandler, hello];
